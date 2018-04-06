@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Ticker} from '../model/ticker';
 import {ApiService} from '../services/api.service';
 import {MatSliderChange, MatSlideToggleChange} from '@angular/material';
+import {CryptoCurrency} from '../model/cryptocurrency';
 
 @Component({
   selector: 'cr-cryptos-today',
@@ -10,49 +10,44 @@ import {MatSliderChange, MatSlideToggleChange} from '@angular/material';
 })
 export class CryptosTodayComponent implements OnInit {
 
-  positiveTickers: Ticker[] = [];
-  negativeTickers: Ticker[] = [];
+  currencies: CryptoCurrency[] = [];
 
-  sliderValue: number = 3;
+  positiveCurrencies: CryptoCurrency[] = [];
+  negativeCurrencies: CryptoCurrency[] = [];
+
+  sliderValue: number = 5;
   major: boolean = true;
 
 
   constructor(private apiService: ApiService) {
-    this.loadTickers();
+    this.apiService.getCurrencies().subscribe(tickers => {
+      this.currencies = tickers;
+      this.loadCurrencies();
+    });
   }
 
   onSliderChange(change: MatSliderChange) {
     this.sliderValue = change.value;
-    this.loadTickers();
+    this.loadCurrencies();
   }
 
   onMinorChange(change: MatSlideToggleChange) {
     this.major = !this.major;
-    this.loadTickers();
+    this.loadCurrencies();
   }
-
-  onMajorChange(change: MatSlideToggleChange) {
-    this.major = !this.major;
-    this.loadTickers();
-  }
-
 
   ngOnInit() {
   }
 
-  loadTickers() {
-    if (this.major) {
-      this.apiService.getTickers().subscribe(tickers => this.positiveTickers
-        = tickers.filter(t => t.rank <= 20 && t.percent_change_24h > 0).slice(0, this.sliderValue));
-      this.apiService.getTickers().subscribe(tickers => this.negativeTickers
-        = tickers.filter(t => t.rank <= 20 && t.percent_change_24h < 0).slice(0, this.sliderValue));
-    }
-    else {
-      this.apiService.getTickers().subscribe(tickers => this.positiveTickers
-        = tickers.filter(t => t.rank >= 50 && t.rank < 100 && t.percent_change_24h > 0).slice(0, this.sliderValue));
-      this.apiService.getTickers().subscribe(tickers => this.negativeTickers
-        = tickers.filter(t => t.rank >= 50 && t.rank < 100 && t.percent_change_24h < 0).slice(0, this.sliderValue));
-    }
+  loadCurrencies() {
+    this.positiveCurrencies = this.currencies
+      .filter(t => (this.major ? t.rank <= 20 : t.rank >= 50 && t.rank < 100) && t.percent_change_24h > 0)
+      .sort((a, b) => b.percent_change_24h - a.percent_change_24h)
+      .slice(0, this.sliderValue);
+    this.negativeCurrencies = this.currencies
+      .filter(t => (this.major ? t.rank <= 20 : t.rank >= 50 && t.rank < 100) && t.percent_change_24h < 0)
+      .sort((a, b) => b.percent_change_24h - a.percent_change_24h)
+      .slice(0, this.sliderValue);
   }
 
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Ticker} from '../model/ticker';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import {CryptoCurrency} from '../model/cryptocurrency';
 
 @Injectable()
 export class ApiService {
@@ -11,8 +11,8 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
-  getTickers(): Observable<Ticker[]> {
-    return this.http.get<Ticker[]>(this.api);
+  getCurrencies(): Observable<CryptoCurrency[]> {
+    return this.http.get<CryptoCurrency[]>(this.api);
   }
 
 }

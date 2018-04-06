@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {CryptoCurrency} from '../model/cryptocurrency';
+import {Wallet} from '../model/wallet';
 
 @Injectable()
 export class ApiService {

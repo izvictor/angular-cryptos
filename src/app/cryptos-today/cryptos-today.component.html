@@ -1,47 +1,52 @@
-<mat-card>
-  <mat-card-title>
-    <div class="text-center">
-      Cryptos today <br>
-      <h6>(top {{sliderValue}})</h6>
-    </div>
-  </mat-card-title>
-  <mat-card-content>
-    <div class="row text-center">
-      <div class="col-lg-12">
-        TOP 3
-        <mat-slider min="3" max="20" step="1" value="{{sliderValue}}" (change)="onSliderChange($event)"></mat-slider>
-        TOP 20
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 offset-2">
-        <mat-list>
-          <mat-list-item class="text-success" *ngFor="let currency of positiveCurrencies">{{currency.symbol}} :
-            {{currency.percent_change_24h}}%
-          </mat-list-item>
-        </mat-list>
-      </div>
-      <div class="col-lg-4 offset-1">
-        <mat-list>
-          <mat-list-item class="text-danger" *ngFor="let currency of negativeCurrencies">{{currency.symbol}} :
-            {{currency.percent_change_24h}}%
-          </mat-list-item>
-        </mat-list>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 p-lg-4">
-        <mat-slide-toggle [(checked)]="!major" (change)="onMinorChange($event)">Minors</mat-slide-toggle>
-      </div>
-      <div class="col-lg-4 p-lg-4">
-        <mat-slide-toggle [(checked)]="major" (change)="onMinorChange($event)">Majors</mat-slide-toggle>
-      </div>
-      <div class="col-lg-4">
-        <div class="alert alert-warning">
-          Majors are Rank 1->20 <br>
-          Minors are Rank 50->100
+<div class="row">
+  <div class="col-sm-8 offset-2 p-4">
+    <mat-card>
+      <mat-card-title>
+        <div class="text-center">
+          Cryptos today <br>
+          <h6>(top {{sliderValue}})</h6>
         </div>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+      </mat-card-title>
+      <mat-card-content>
+        <div class="row text-center">
+          <div class="col-lg-12">
+            TOP 3
+            <mat-slider min="3" max="20" step="1" value="{{sliderValue}}"
+                        (change)="onSliderChange($event)"></mat-slider>
+            TOP 20
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 offset-2">
+            <mat-list>
+              <mat-list-item class="text-success" *ngFor="let currency of positiveCurrencies">{{currency.symbol}} :
+                {{currency.percent_change_24h}}%
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <div class="col-lg-4 offset-1">
+            <mat-list>
+              <mat-list-item class="text-danger" *ngFor="let currency of negativeCurrencies">{{currency.symbol}} :
+                {{currency.percent_change_24h}}%
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 p-lg-4">
+            <mat-slide-toggle [(checked)]="!major" (change)="onMinorChange($event)">Minors</mat-slide-toggle>
+          </div>
+          <div class="col-lg-4 p-lg-4">
+            <mat-slide-toggle [(checked)]="major" (change)="onMinorChange($event)">Majors</mat-slide-toggle>
+          </div>
+          <div class="col-lg-4">
+            <div class="alert alert-warning">
+              Majors are Rank 1->20 <br>
+              Minors are Rank 50->100
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

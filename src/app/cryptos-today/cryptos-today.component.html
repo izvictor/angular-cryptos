@@ -1,0 +1,46 @@
+<mat-card>
+  <mat-card-title>
+    <div class="text-center">
+      Cryptos today
+    </div>
+  </mat-card-title>
+  <mat-card-content>
+    <div class="row text-center">
+      <div class="col-lg-12">
+        TOP 3
+        <mat-slider min="3" max="20" step="1" value="5" (change)="onSliderChange($event)"></mat-slider>
+        TOP 20
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <mat-list>
+          <mat-list-item class="text-success" *ngFor="let ticker of positiveTickers">{{ticker.symbol}} :
+            {{ticker.percent_change_24h}}%
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <div class="col-lg-6">
+        <mat-list>
+          <mat-list-item class="text-danger" *ngFor="let ticker of negativeTickers">{{ticker.symbol}} :
+            {{ticker.percent_change_24h}}%
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 p-lg-4">
+        <mat-slide-toggle [(checked)]="!major" (change)="onMinorChange($event)">Minors</mat-slide-toggle>
+      </div>
+      <div class="col-lg-4 p-lg-4">
+        <mat-slide-toggle [(checked)]="major" (change)="onMajorChange($event)">Majors</mat-slide-toggle>
+      </div>
+      <div class="col-lg-4">
+        <div class="alert alert-warning">
+          Majors are Rank 1->20 <br>
+          Minors ar Rank 50->100
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
